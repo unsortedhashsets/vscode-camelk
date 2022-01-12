@@ -23,8 +23,6 @@ import * as vscode from 'vscode';
 import * as kamel from '../kamel';
 import { getTelemetryServiceInstance } from '../Telemetry';
 
-const validFilename = require('valid-filename');
-
 export const LANGUAGES_WITH_FILENAME_EXTENSIONS = new Map([
 	['Java', 'java'],
 	['XML', 'xml'],
@@ -93,7 +91,7 @@ function computeFullpath(language: string, workspaceFolder: vscode.WorkspaceFold
 	return path.join(workspaceFolder.uri.fsPath, `${fileName}.${fileExtension}`);
 }
 
-export function validateFileName(name: string, language: string, workspaceFolder: vscode.WorkspaceFolder): string | undefined {
+export async function validateFileName(name: string, language: string, workspaceFolder: vscode.WorkspaceFolder): Promise<string | undefined> {
 	if (!name) {
 		return 'Please provide a name for the new file (without extension)';
 	}
@@ -101,7 +99,8 @@ export function validateFileName(name: string, language: string, workspaceFolder
 	if (fs.existsSync(newFilePotentialFullPath)) {
 		return 'There is already a file with the same name. Please choose a different name.';
 	}
-	if (!validFilename(name)) {
+	const validFileName = await import('valid-filename');
+	if (!validFileName.default(name)) {
 		return 'The filename is invalid.';
 	}
 	const patternJavaNamingConvention = '[A-Z][a-zA-Z_$0-9]*';

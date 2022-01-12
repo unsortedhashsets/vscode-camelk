@@ -24,27 +24,27 @@ import * as NewIntegrationFileCommand from '../../../commands/NewIntegrationFile
 suite('New Apache Camel K integration file - file name validation', function() {
 	const workspaceFolder = (vscode.workspace.workspaceFolders as vscode.WorkspaceFolder[])[0];
 
-	test('Message on empty name', function() {
-		expect(NewIntegrationFileCommand.validateFileName('', 'Java', workspaceFolder)).to.not.be.undefined;
+	test('Message on empty name', async function() {
+		expect(await NewIntegrationFileCommand.validateFileName('', 'Java', workspaceFolder)).to.not.be.undefined;
 	});
 
-	test('Message on invalid name', function() {
-		expect(NewIntegrationFileCommand.validateFileName('with a slash/', 'Java', workspaceFolder)).to.not.be.undefined;
+	test('Message on invalid name', async function() {
+		expect(await NewIntegrationFileCommand.validateFileName('with a slash/', 'Java', workspaceFolder)).to.not.be.undefined;
 	});
 
-	test('Message if file already exists', function() {
-		expect(NewIntegrationFileCommand.validateFileName('MyRouteBuilder', 'Java', workspaceFolder)).to.not.be.undefined;
+	test('Message if file already exists', async function() {
+		expect(await NewIntegrationFileCommand.validateFileName('MyRouteBuilder', 'Java', workspaceFolder)).to.not.be.undefined;
 	});
 
-	test('No Message on valid name for java', function() {
-		expect(NewIntegrationFileCommand.validateFileName('Valid', 'Java', workspaceFolder)).to.be.undefined;
+	test('No Message on valid name for java', async function() {
+		expect(await NewIntegrationFileCommand.validateFileName('Valid', 'Java', workspaceFolder)).to.be.undefined;
 	});
 
-	test('No Message on valid name for xml', function() {
-		expect(NewIntegrationFileCommand.validateFileName('valid', 'xml', workspaceFolder)).to.be.undefined;
+	test('No Message on valid name for xml', async function() {
+		expect(await NewIntegrationFileCommand.validateFileName('valid', 'xml', workspaceFolder)).to.be.undefined;
 	});
 
-	test('Message on invalid Java Convention', function() {
-		expect(NewIntegrationFileCommand.validateFileName('invalid', 'Java', workspaceFolder)).to.not.be.undefined;
+	test('Message on invalid Java Convention', async function() {
+		expect(await NewIntegrationFileCommand.validateFileName('invalid', 'Java', workspaceFolder)).to.not.be.undefined;
 	});
 });
