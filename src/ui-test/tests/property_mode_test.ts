@@ -70,6 +70,7 @@ export function propertyModeTest(extension: string, language: string, doNextTest
             }
             if (this.currentTest?.state === 'failed' && this.id === 'unstable') {
                 this.currentTest.state = 'pending';
+                this.currentTest.pending = true;
             }
         });
 
