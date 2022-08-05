@@ -154,7 +154,7 @@ export async function webViewOpen(): Promise<WebView> {
 }
 
 export async function webViewHasTextInWebElement(driver: WebDriver, text: string, check = false, locator: Locator = { id: 'content' }, timePeriod = 1000, timeout = 25000): Promise<boolean> {
-    const webView = await driver.wait(async () => { return webViewOpen(); }, consts.TIMEOUT_5_SECONDS);
+    let webView = await driver.wait(async () => { return webViewOpen(); }, consts.TIMEOUT_5_SECONDS);
     let content = ''
     try {
         return await driver.wait(async () => {
@@ -171,6 +171,7 @@ export async function webViewHasTextInWebElement(driver: WebDriver, text: string
                     return false;
                 }
             } catch (err) {
+                webView = await driver.wait(async () => { return webViewOpen(); }, consts.TIMEOUT_5_SECONDS);
                 await webView.switchBack();
                 webView.getDriver().sleep(timePeriod);
                 return false;
