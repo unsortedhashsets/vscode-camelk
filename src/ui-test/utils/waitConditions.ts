@@ -153,7 +153,7 @@ export async function webViewOpen(): Promise<WebView> {
     }
 }
 
-export async function webViewHasTextInWebElement(driver: WebDriver, text: string, locator: Locator = { id: 'content' }, timePeriod = 1000, timeout = 25000): Promise<boolean> {
+export async function webViewHasTextInWebElement(driver: WebDriver, text: string, check = false, locator: Locator = { id: 'content' }, timePeriod = 1000, timeout = 25000): Promise<boolean> {
     const webView = await driver.wait(async () => { return webViewOpen(); }, consts.TIMEOUT_5_SECONDS);
     let content = ''
     try {
@@ -162,6 +162,7 @@ export async function webViewHasTextInWebElement(driver: WebDriver, text: string
                 await webView.switchToFrame();
                 const contentElement = await webView.findWebElement(locator);
                 content = await contentElement.getText();
+                if (check) { console.log(content); }
                 await webView.switchBack();
                 if (content.indexOf(text) > -1) {
                     return true;
@@ -177,8 +178,6 @@ export async function webViewHasTextInWebElement(driver: WebDriver, text: string
         }, timeout);
     } catch (err) {
         await webView.switchBack();
-        webView.getDriver().sleep(timePeriod);
-        console.log(content);
         return false;
     }
 }
