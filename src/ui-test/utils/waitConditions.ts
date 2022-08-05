@@ -144,6 +144,8 @@ export async function webViewOpen(): Promise<WebView> {
     try {
         const webView = new WebView();
         if (await webView.isDisplayed() && await webView.isEnabled()) {
+            await webView.switchToFrame();
+            await webView.switchBack();
             return webView;
         } else {
             return await webViewOpen();
