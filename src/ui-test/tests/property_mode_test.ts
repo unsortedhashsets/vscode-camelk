@@ -68,10 +68,6 @@ export function propertyModeTest(extension: string, language: string, doNextTest
             if (this.currentTest?.state === 'failed' && this.id !== 'unstable') {
                 doNextTest.stopTest();
             }
-            if (this.currentTest?.state === 'failed' && this.id === 'unstable') {
-                this.currentTest.state = 'pending';
-                this.currentTest.pending = true;
-            }
         });
 
         it(`Update Simple.${extension} with new message`, async function () {
@@ -136,11 +132,12 @@ export function propertyModeTest(extension: string, language: string, doNextTest
             await driver.wait(() => { return webViewOpen(); }, consts.TIMEOUT_15_SECONDS);
         });
 
-        it(`Integration pod started`, async function () {
-            this.timeout(consts.TIMEOUT_30_SECONDS);
-            this.id = 'unstable';
-            assert.isTrue(await webViewHasTextInWebElement(driver, consts.initialPodReadyMessage));
-        });
+        // Integration pod monitoring check is unstable due the often lack of the '[1] Monitoring pod' string in output.
+        //
+        //it(`Integration pod started`, async function () {
+        //    this.timeout(consts.TIMEOUT_30_SECONDS);
+        //    assert.isTrue(await webViewHasTextInWebElement(driver, consts.initialPodReadyMessage));
+        //});
 
         it(`Integration log contains - ${logMessage}`, async function () {
             this.timeout(consts.TIMEOUT_60_SECONDS);
