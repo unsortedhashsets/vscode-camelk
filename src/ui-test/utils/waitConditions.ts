@@ -140,9 +140,11 @@ export async function sidebarIntegrationRemove(driver: WebDriver, section: strin
     }
 }
 
+let webView: WebView;
+
 export async function webViewOpen(): Promise<WebView> {
     try {
-        const webView = new WebView();
+        webView = new WebView();
         if (await webView.isDisplayed() && await webView.isEnabled()) {
             await webView.switchToFrame();
             await webView.switchBack();
@@ -156,7 +158,7 @@ export async function webViewOpen(): Promise<WebView> {
 }
 
 export async function webViewHasTextInWebElement(driver: WebDriver, text: string, locator: Locator = { id: 'content' }, timePeriod = 1000, timeout = 25000): Promise<boolean> {
-    let webView = await driver.wait(async () => { return webViewOpen(); }, consts.TIMEOUT_5_SECONDS);
+    webView = await driver.wait(async () => { return webViewOpen(); }, consts.TIMEOUT_5_SECONDS);
     try {
         return await driver.wait(async () => {
             try {
@@ -171,7 +173,6 @@ export async function webViewHasTextInWebElement(driver: WebDriver, text: string
                     return false;
                 }
             } catch (err) {
-                webView = await driver.wait(async () => { return webViewOpen(); }, consts.TIMEOUT_5_SECONDS);
                 await webView.switchBack();
                 webView.getDriver().sleep(timePeriod);
                 return false;
