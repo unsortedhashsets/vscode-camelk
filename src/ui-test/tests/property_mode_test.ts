@@ -136,7 +136,7 @@ export function propertyModeTest(extension: string, language: string, doNextTest
             await driver.wait(() => { return webViewOpen(); }, consts.TIMEOUT_15_SECONDS);
         });
 
-        it(`Integration pod started 1`, async function () {
+        it(`Integration pod started`, async function () {
             this.timeout(consts.TIMEOUT_30_SECONDS);
             this.id = 'unstable';
             assert.isTrue(await webViewHasTextInWebElement(driver, consts.initialPodReadyMessage));
@@ -145,12 +145,6 @@ export function propertyModeTest(extension: string, language: string, doNextTest
         it(`Integration log contains - ${logMessage}`, async function () {
             this.timeout(consts.TIMEOUT_60_SECONDS);
             assert.isTrue(await webViewHasTextInWebElement(driver, logMessage));
-        });
-
-        it(`Integration pod started 2`, async function () {
-            this.timeout(consts.TIMEOUT_30_SECONDS);
-            this.id = 'unstable';
-            assert.isTrue(await webViewHasTextInWebElement(driver, consts.initialPodReadyMessage));
         });
 
     });
