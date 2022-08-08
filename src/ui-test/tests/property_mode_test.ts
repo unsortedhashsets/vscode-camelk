@@ -139,7 +139,7 @@ export function propertyModeTest(extension: string, language: string, doNextTest
         it(`Integration pod started 1`, async function () {
             this.timeout(consts.TIMEOUT_30_SECONDS);
             this.id = 'unstable';
-            assert.isTrue(await webViewHasTextInWebElement(driver, consts.initialPodReadyMessage, true));
+            assert.isTrue(await webViewHasTextInWebElement(driver, consts.initialPodReadyMessage));
         });
 
         it(`Integration log contains - ${logMessage}`, async function () {
@@ -150,7 +150,7 @@ export function propertyModeTest(extension: string, language: string, doNextTest
         it(`Integration pod started 2`, async function () {
             this.timeout(consts.TIMEOUT_30_SECONDS);
             this.id = 'unstable';
-            assert.isTrue(await webViewHasTextInWebElement(driver, consts.initialPodReadyMessage, true));
+            assert.isTrue(await webViewHasTextInWebElement(driver, consts.initialPodReadyMessage));
         });
 
     });
